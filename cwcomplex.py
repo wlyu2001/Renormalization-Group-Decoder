@@ -1,6 +1,7 @@
-#2complex
+#cwcomplex
 
 import networkx as nx
+import numpy as np
 
 
 
@@ -17,12 +18,15 @@ class TwoComplex(nx.Graph):
 		
 	def faces(self):
 		return self.fac
+		
+	def nVertices(self):
+		return len(self.nodes())
 
 	def nEdges(self):
 		return len(self.edges())
-
-	def nVertices(self):
-		return len(self.nodes())
+		
+	def nFaces(self):
+		return len(self.fac)
 
 	def dist(self,x,y):
 		return nx.shortest_path_length(self,x,y)
@@ -31,7 +35,15 @@ class TwoComplex(nx.Graph):
 		return nx.shortest_path(self,x,y)
 		
 	def bound1(self):
-		return nx.incidence_matrix(self)
+		return nx.incidence_matrix(self).astype(int)
+		
+	def bound2(self):
+		mat = np.zeros((self.nEdges(), self.nFaces()),dtype = np.int)
+		edgelist = [set(e) for e in self.edges()]
+		for i in range(len(self.fac)):
+			for j in range(len(self.fac[i])):
+				mat[edgelist.index(set(self.fac[i][j]))][i] = 1
+		return mat
 
 
 
