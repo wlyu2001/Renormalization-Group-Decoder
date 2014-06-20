@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 import pdb
 import numpy as np
 
-lat = tor.ToricLattice(3)
+np.set_printoptions(threshold='nan')
+
+lat = tor.ToricLattice(4)
 # ec = errorcorrection.errorChain(lat)
 # 
 # ec.createRandom(0.1)
@@ -18,12 +20,12 @@ lat = tor.ToricLattice(3)
 # corr = errorcorrection.errorCorrection(lat,synd)
 # 
 # print(corr.runRG())
-print(lat.edges())
-print(lat.faces())
+# print(lat.edges())
+# print(lat.faces())
 # print(lat.bound1())
 # print(lat.bound2())
-print(np.dot(lat.bound1(),lat.bound2()) % 2)
-
+#print(np.dot(lat.bound1(),lat.bound2()) % 2)
+print(lat.bettiNumber())
 
 # nx.draw(lat.graph)
 # 

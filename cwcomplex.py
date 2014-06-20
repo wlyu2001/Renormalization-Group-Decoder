@@ -2,6 +2,7 @@
 
 import networkx as nx
 import numpy as np
+import linalg
 
 
 
@@ -44,6 +45,18 @@ class TwoComplex(nx.Graph):
 			for j in range(len(self.fac[i])):
 				mat[edgelist.index(set(self.fac[i][j]))][i] = 1
 		return mat
+		
+	def bettiNumber(self):
+		d_k = self.bound1()
+		d_kplus1 = self.bound2()
+		A, B = np.copy(d_k), np.copy(d_kplus1)
+		linalg.simultaneousReduce(A, B)
+		linalg.finishRowReducing(B)
+		dimKChains = A.shape[1]
+		#here is a bug: need rank of A and B in F2
+		kernelDim = dimKChains - linalg.numPivotCols(A)
+		imageDim = linalg.numPivotRows(B)
+		return kernelDim - imageDim
 
 
 
